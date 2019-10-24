@@ -109,13 +109,18 @@ map.on('style.load', () => {
         coverage: 1,
         upperPercentile: 100,
         colorRange: COLOR_RANGE,
-        elevationRange: [0, 1000],
-        elevationScale: 250,
+        elevationRange: [0, 50],
+        elevationScale: 25,
         extruded: true,
         getPosition: d => [Number(d.longitude), Number(d.latitude)],
         lightSettings: LIGHT_SETTINGS,
         opacity: 1
     });
+
+    var popup = new mapboxgl.Popup({closeOnClick: false})
+.setLngLat([-73.9844,40.7590])
+.setHTML('<h1>Hello World!</h1>')
+.addTo(map);
 
     // Add the deck.gl hex layer below labels in the Mapbox map
     map.addLayer(hexagonLayer, 'waterway-label');
