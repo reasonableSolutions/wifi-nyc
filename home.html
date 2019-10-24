@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>Road AccidentsIncidents</title>
+    <title>NYC Free Wifi</title>
         <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
         <link rel="stylesheet" type="text/css" href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0-beta.1/mapbox-gl.css">
@@ -74,8 +74,8 @@ const map = new mapboxgl.Map({
     antialias: true
 });
 
-// Get Data for visual
-const DATA_URL = 'https://raw.githubusercontent.com/pillows/wifi-nyc/master/wifi.csv';
+// Get Data for visual from nyc open data
+const DATA_URL = "https://data.cityofnewyork.us/resource/yjub-udmw.csv";
 
 //Create the deck.gl hexagon layer and style for the data
 const OPTIONS = ['radius', 'coverage', 'upperPercentile'];
@@ -109,13 +109,18 @@ map.on('style.load', () => {
         coverage: 1,
         upperPercentile: 100,
         colorRange: COLOR_RANGE,
-        elevationRange: [0, 1000],
-        elevationScale: 250,
+        elevationRange: [0, 50],
+        elevationScale: 25,
         extruded: true,
-        getPosition: d => [Number(d.lng), Number(d.lat)],
+        getPosition: d => [Number(d.longitude), Number(d.latitude)],
         lightSettings: LIGHT_SETTINGS,
         opacity: 1
     });
+
+    var popup = new mapboxgl.Popup({closeOnClick: false})
+.setLngLat([-73.9844,40.7590])
+.setHTML('<h1>Hello World!</h1>')
+.addTo(map);
 
     // Add the deck.gl hex layer below labels in the Mapbox map
     map.addLayer(hexagonLayer, 'waterway-label');
